@@ -1,0 +1,15 @@
+{
+  "name": "mlb-lcd-data-feed",
+  "version": "0.0.1",
+  "description": "Collects data about MLB games and sends to the Particle API for display on an LCD screen",
+  "main": "mlb-data-feed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Geoffrey Grosenbach",
+  "license": "MIT",
+  "dependencies": {
+    "mlbgames": "^1.0.5",
+    "sprintf-js": "^1.1.1"
+  }
+}
