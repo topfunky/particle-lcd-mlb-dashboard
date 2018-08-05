@@ -8,10 +8,11 @@ const int CHAR_OUT_OFF=1;
 const int CHAR_OUT_ON=2;
 const int CHAR_UP_ARROW=3;
 const int CHAR_DOWN_ARROW=4;
+const int CHAR_SQUARE_DOT=5;
 
-String version = "018";
+String version = "021";
 
-// Create API functions, one for writing on each row
+// Create API functions
 int lcdMsgRow1(String command);
 int lcdMsgRow2(String command);
 int bases(String command);
@@ -21,7 +22,7 @@ Serial_LCD_SparkFun lcd = Serial_LCD_SparkFun();
 
 void setup() {
     delay(500);
-    
+
     pinMode(LED_FIRST_BASE, OUTPUT);
     analogWrite(LED_FIRST_BASE, 0);
 
@@ -36,13 +37,12 @@ void setup() {
     Spark.function("lcdRow2", lcdMsgRow2);
     Spark.function("bases", bases);
 
-    // // Starting state
+    // Starting state of LCD
     //*****************************
     lcdMsgRow1("BASEBALL     " + version);
     lcdMsgRow2("1234567890ABCDEF");
-    
-    createSpecialCharacters();
 
+    createSpecialCharacters();
 
     lcd.setCursor(2, 9);
     lcd.printCustomChar(1);
@@ -62,7 +62,6 @@ void setup() {
     lcd.printCustomChar(8);
 }
 
-// Don't need to do anything in the loop
 void loop() {
 }
 
@@ -78,6 +77,9 @@ void createSpecialCharacters() {
 
     uint8_t downArrow[8] = {0x00, 0x00, 0x00, 0x1F, 0x0E, 0x04, 0x00, 0x00};
     lcd.createChar(CHAR_DOWN_ARROW, downArrow);
+
+    uint8_t squareDot[8] = {0x00, 0x00, 0x0E, 0x0E, 0x0E, 0x00, 0x00, 0x00};
+    lcd.createChar(CHAR_SQUARE_DOT, squareDot);
 }
 
 // Writing to row 1
@@ -86,6 +88,7 @@ int lcdMsgRow1(String command) {
     lcd.selectLine(1);
     Serial1.print(command);
 
+    // Read first character, draw inning up or down
     lcd.setCursor(2, 11);
     if (command.charAt(0) == '*') {
         lcd.printCustomChar(CHAR_UP_ARROW);
@@ -93,6 +96,17 @@ int lcdMsgRow1(String command) {
         lcd.printCustomChar(CHAR_DOWN_ARROW);
     }
 
+    // Read first character, draw square dot if away team is on offense
+    if (command.charAt(0) == '*') {
+        lcd.setCursor(1, 1);
+        lcd.printCustomChar(CHAR_SQUARE_DOT);
+    } else {
+        // Home team is on offense
+        lcd.setCursor(2, 1);
+        lcd.printCustomChar(CHAR_SQUARE_DOT);
+    }
+
+    // Draw special characters for outs
     lcd.setCursor(2, 14);
     if (command.charAt(29) == '*') {
         lcd.printCustomChar(CHAR_OUT_ON);
@@ -122,14 +136,14 @@ int lcdMsgRow2(String command){
     // Here we're moving the "cursor" to line 2
     lcd.selectLine(2);
     Serial1.print(command);
- 
+
     return version.toInt();
 }
 
 // Set LEDs for bases
 int bases(String command) {
     delay(500);
-    
+
     if (command.indexOf("1") >= 0) {
         analogWrite(LED_FIRST_BASE, 150);
     } else {
