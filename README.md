@@ -2,7 +2,9 @@
 
 This experimental code pulls a data feed of major league baseball games and sends it to the https://www.particle.io/ API to display stats on an LCD screen.
 
-![Particle and LCD](https://github.com/topfunky/particle-lcd-mlb-dashboard/raw/master/assets/sparkfun-lcd-mlb.jpg)
+![Tweet with photo of Particle and LCD](https://twitter.com/topfunky/status/1025867900488310785)
+
+:pushpin: NOTE: Code in this repo implements even better custom LCD graphics
 
 # Development Notes
 
