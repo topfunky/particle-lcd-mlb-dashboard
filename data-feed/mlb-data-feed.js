@@ -6,15 +6,14 @@ const moment = require("moment-timezone");
 const GAME_IN_PROGRESS = "In Progress";
 
 const FAVORITE_TEAMS = [
-  "CHC",
-  "SEA",
   "NYY",
   "LAA",
-  "HOU",
-  "OAK",
   "LAD",
-  "BOS",
+  "CHC",
   "WSH",
+  "SEA",
+  "OAK",
+  "BOS",
   "MIL",
   "CWS",
   "NYM"
@@ -121,6 +120,12 @@ function postToAPI(apiName, data) {
 }
 
 function formatStats(stats) {
+  // Send long string with game content for line 1 and line 2 of LCD.
+  // EXAMPLE on two lines:
+  // *NYY 10 Judg 1-2
+  //  LAD 12    8  **
+  // EXAMPLE on one line:
+  // *NYY 10 Judg 1-2 LAD 12    8  **
   console.log("PBP:", stats.pbp);
   line1 = [
     (stats.top_inning == "Y" ? "*" : " ") +
@@ -145,6 +150,8 @@ function formatStats(stats) {
       stats.runners_on_base.hasOwnProperty("runner_on_3b") ? "3" : "0"
     ].join("");
     // TODO: Should be %-16d
+    // EXAMPLE: Runners on all bases (321)
+    //          0000000000000321
     formattedBases = sprintf("%16s", bases);
     postToAPI("bases", formattedBases);
   } else {

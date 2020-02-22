@@ -12,7 +12,7 @@ const int CHAR_SQUARE_DOT=5;
 const int CHAR_BASES_OCCUPIED=6;
 const int CHAR_PLAY=7;
 
-String version = "034";
+String version = "036";
 
 // Additional special characters
 uint8_t basesOccupied0[8] = {0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
