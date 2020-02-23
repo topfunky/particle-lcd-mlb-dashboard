@@ -103,7 +103,7 @@ function postToAPI(apiName, data) {
       "/" +
       apiName,
     headers: {
-      Authorization: "Bearer " + process.env.SPARK_TOKEN
+      Authorization: "Bearer " + process.env.SPARK_ACCESS_TOKEN
     },
     form: {
       arg: data
@@ -113,6 +113,9 @@ function postToAPI(apiName, data) {
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
+      console.log("POSTED");
+    } else {
+      console.log("ERROR", response, error);
     }
   }
 
