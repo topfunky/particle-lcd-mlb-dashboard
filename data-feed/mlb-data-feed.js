@@ -6,10 +6,10 @@ const moment = require("moment-timezone");
 const GAME_IN_PROGRESS = "In Progress";
 
 const FAVORITE_TEAMS = [
+  "CHC",
   "NYY",
   "LAA",
   "LAD",
-  "CHC",
   "WSH",
   "SEA",
   "OAK",
@@ -99,23 +99,24 @@ function postToAPI(apiName, data) {
     method: "POST",
     url:
       "https://api.particle.io/v1/devices/" +
-      process.env.SPARK_DEVICE_ID +
+      process.env.PARTICLE_DEVICE_ID +
       "/" +
       apiName,
     headers: {
-      Authorization: "Bearer " + process.env.SPARK_ACCESS_TOKEN
+      Authorization: "Bearer " + process.env.PARTICLE_ACCESS_TOKEN
     },
     form: {
       arg: data
     }
   };
 
+  console.log(options)
+
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
-      console.log("POSTED");
     } else {
-      console.log("ERROR", response, error);
+      console.log(error, response, body)
     }
   }
 
