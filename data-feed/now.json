@@ -1,6 +1,6 @@
 {
   "env": {
-    "SPARK_ACCESS_TOKEN": "@spark-access-token",
-    "SPARK_DEVICE_ID": "@spark-device-id"
+    "PARTICLE_ACCESS_TOKEN": "@spark-access-token",
+    "PARTICLE_DEVICE_ID": "@spark-device-id"
   }
 }
