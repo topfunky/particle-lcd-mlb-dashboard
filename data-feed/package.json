@@ -11,7 +11,7 @@
   "dependencies": {
     "mlbgames": "^1.0.5",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.21",
+    "moment-timezone": "^0.5.35",
     "request": "^2.87.0",
     "sprintf-js": "^1.1.1"
   }
